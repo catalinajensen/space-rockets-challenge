@@ -19,7 +19,8 @@ import {
 	Stack,
 	AspectRatioBox,
 	StatGroup,
-	Tooltip
+	Tooltip,
+	IconButton
 } from '@chakra-ui/core';
 
 import { useSpaceX } from '../utils/use-space-x';
@@ -27,7 +28,7 @@ import { formatDateTime } from '../utils/format-date';
 import Error from './error';
 import Breadcrumbs from './breadcrumbs';
 
-export default function Launch() {
+export default function Launch({ favouriteLaunches, markAsFavouriteLaunch }) {
 	let { launchId } = useParams();
 	const { data: launch, error } = useSpaceX(`/launches/${launchId}`);
 
@@ -40,6 +41,9 @@ export default function Launch() {
 		);
 	}
 
+	const isFavourite =
+		(favouriteLaunches || []).findIndex(item => item.flight_number === launch.flight_number) > -1;
+
 	return (
 		<div>
 			<Breadcrumbs
@@ -49,7 +53,11 @@ export default function Launch() {
 					{ label: `#${launch.flight_number}` }
 				]}
 			/>
-			<Header launch={launch} />
+			<Header
+				launch={launch}
+				isFavourite={isFavourite}
+				markAsFavouriteLaunch={markAsFavouriteLaunch}
+			/>
 			<Box m={[3, 6]}>
 				<TimeAndLocation launch={launch} />
 				<RocketInfo launch={launch} />
@@ -63,7 +71,7 @@ export default function Launch() {
 	);
 }
 
-function Header({ launch }) {
+function Header({ launch, isFavourite, markAsFavouriteLaunch }) {
 	return (
 		<Flex
 			bgImage={`url(${launch.links.flickr_images[0]})`}
@@ -85,17 +93,30 @@ function Header({ launch }) {
 				objectFit="contain"
 				objectPosition="bottom"
 			/>
-			<Heading
-				color="white"
-				display="inline"
-				backgroundColor="#718096b8"
-				fontSize={['lg', '5xl']}
-				px="4"
-				py="2"
-				borderRadius="lg"
-			>
-				{launch.mission_name}
-			</Heading>
+			<Box>
+				<Heading
+					color="white"
+					display="inline"
+					backgroundColor="#718096b8"
+					fontSize={['lg', '5xl']}
+					px="4"
+					py="2"
+					borderRadius="lg"
+				>
+					{launch.mission_name}
+				</Heading>
+				<IconButton
+					aria-label="Mark as favourite"
+					icon="star"
+					size="lg"
+					variant="ghost"
+					fontSize={['lg', '4xl']}
+					mb="5"
+					ml="5"
+					variantColor={isFavourite ? 'yellow' : 'gray'}
+					onClick={e => markAsFavouriteLaunch(launch, e)}
+				/>
+			</Box>
 			<Stack isInline spacing="3">
 				<Badge variantColor="purple" fontSize={['xs', 'md']}>
 					#{launch.flight_number}
