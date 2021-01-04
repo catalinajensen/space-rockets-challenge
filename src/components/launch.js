@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams, Link as RouterLink } from 'react-router-dom';
 import { format as timeAgo } from 'timeago.js';
 import { Watch, MapPin, Navigation, Layers } from 'react-feather';
+import { StarIcon } from '@chakra-ui/icons';
 import {
 	Flex,
 	Heading,
@@ -17,11 +18,11 @@ import {
 	Image,
 	Link,
 	Stack,
-	AspectRatioBox,
+	AspectRatio,
 	StatGroup,
 	Tooltip,
 	IconButton
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 
 import { useSpaceX } from '../utils/use-space-x';
 import { formatDateTime } from '../utils/format-date';
@@ -36,7 +37,7 @@ export default function Launch({ favouriteLaunches, markAsFavouriteLaunch }) {
 	if (!launch) {
 		return (
 			<Flex justifyContent="center" alignItems="center" minHeight="50vh">
-				<Spinner size="lg" />
+				<Spinner w="lg" h="lg" />
 			</Flex>
 		);
 	}
@@ -107,26 +108,25 @@ function Header({ launch, isFavourite, markAsFavouriteLaunch }) {
 				</Heading>
 				<IconButton
 					aria-label="Mark as favourite"
-					icon="star"
-					size="lg"
+					icon={<StarIcon />}
 					variant="ghost"
 					fontSize={['lg', '4xl']}
 					mb="5"
 					ml="5"
-					variantColor={isFavourite ? 'yellow' : 'gray'}
+					colorScheme={isFavourite ? 'yellow' : 'gray'}
 					onClick={e => markAsFavouriteLaunch(launch, e)}
 				/>
 			</Box>
 			<Stack isInline spacing="3">
-				<Badge variantColor="purple" fontSize={['xs', 'md']}>
+				<Badge colorScheme="purple" fontSize={['xs', 'md']}>
 					#{launch.flight_number}
 				</Badge>
 				{launch.launch_success ? (
-					<Badge variantColor="green" fontSize={['xs', 'md']}>
+					<Badge colorScheme="green" fontSize={['xs', 'md']}>
 						Successful
 					</Badge>
 				) : (
-					<Badge variantColor="red" fontSize={['xs', 'md']}>
+					<Badge colorScheme="red" fontSize={['xs', 'md']}>
 						Failed
 					</Badge>
 				)}
@@ -224,14 +224,14 @@ function RocketInfo({ launch }) {
 
 function Video({ launch }) {
 	return (
-		<AspectRatioBox maxH="400px" ratio={1.7}>
+		<AspectRatio maxH="400px" ratio={1.7}>
 			<Box
 				as="iframe"
 				title={launch.mission_name}
 				src={`https://www.youtube.com/embed/${launch.links.youtube_id}`}
 				allowFullScreen
 			/>
-		</AspectRatioBox>
+		</AspectRatio>
 	);
 }
 

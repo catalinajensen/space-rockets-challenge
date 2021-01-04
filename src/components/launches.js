@@ -1,5 +1,6 @@
 import React from 'react';
-import { Badge, Box, Image, SimpleGrid, Text, Flex, IconButton } from '@chakra-ui/core';
+import { StarIcon } from '@chakra-ui/icons';
+import { Badge, Box, Image, SimpleGrid, Text, Flex, IconButton } from '@chakra-ui/react';
 import { format as timeAgo } from 'timeago.js';
 import { Link } from 'react-router-dom';
 
@@ -94,11 +95,11 @@ export function LaunchItem({ launch, favouriteLaunches, markAsFavouriteLaunch })
 			<Box p="6">
 				<Box d="flex" alignItems="baseline">
 					{launch.launch_success ? (
-						<Badge px="2" variant="solid" variantColor="green">
+						<Badge px="2" variant="solid" colorScheme="green">
 							Successful
 						</Badge>
 					) : (
-						<Badge px="2" variant="solid" variantColor="red">
+						<Badge px="2" variant="solid" colorScheme="red">
 							Failed
 						</Badge>
 					)}
@@ -120,10 +121,9 @@ export function LaunchItem({ launch, favouriteLaunches, markAsFavouriteLaunch })
 					<Box width="10%">
 						<IconButton
 							aria-label="Mark as favourite"
-							icon="star"
-							size="lg"
+							icon={<StarIcon />}
 							variant="ghost"
-							variantColor={isFavourite ? 'yellow' : 'gray'}
+							colorScheme={isFavourite ? 'yellow' : 'gray'}
 							onClick={e => markAsFavouriteLaunch(launch, e)}
 						/>
 					</Box>

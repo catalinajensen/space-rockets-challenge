@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { MapPin, Navigation } from 'react-feather';
+import { StarIcon } from '@chakra-ui/icons';
 import {
 	Flex,
 	Heading,
@@ -14,9 +15,9 @@ import {
 	Text,
 	Spinner,
 	Stack,
-	AspectRatioBox,
+	AspectRatio,
 	IconButton
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 
 import { useSpaceX } from '../utils/use-space-x';
 import Error from './error';
@@ -38,7 +39,7 @@ export default function LaunchPad({ favouriteLaunchPads, markAsFavouriteLaunchPa
 	if (!launchPad) {
 		return (
 			<Flex justifyContent="center" alignItems="center" minHeight="50vh">
-				<Spinner size="lg" />
+				<Spinner w="lg" h="lg" />
 			</Flex>
 		);
 	}
@@ -100,26 +101,24 @@ function Header({ launchPad, isFavourite, markAsFavouriteLaunchPad }) {
 				</Heading>
 				<IconButton
 					aria-label="Mark as favourite"
-					icon="star"
-					size="lg"
+					icon={<StarIcon />}
 					variant="ghost"
 					fontSize={['lg', '4xl']}
 					mb="5"
-					ml="5"
-					variantColor={isFavourite ? 'yellow' : 'gray'}
+					colorScheme={isFavourite ? 'yellow' : 'gray'}
 					onClick={e => markAsFavouriteLaunchPad(launchPad, e)}
 				/>
 			</Box>
 			<Stack isInline spacing="3">
-				<Badge variantColor="purple" fontSize={['sm', 'md']}>
+				<Badge colorScheme="purple" fontSize={['sm', 'md']}>
 					{launchPad.successful_launches}/{launchPad.attempted_launches} successful
 				</Badge>
 				{launchPad.stats === 'active' ? (
-					<Badge variantColor="green" fontSize={['sm', 'md']}>
+					<Badge colorScheme="green" fontSize={['sm', 'md']}>
 						Active
 					</Badge>
 				) : (
-					<Badge variantColor="red" fontSize={['sm', 'md']}>
+					<Badge colorScheme="red" fontSize={['sm', 'md']}>
 						Retired
 					</Badge>
 				)}
@@ -156,13 +155,13 @@ function LocationAndVehicles({ launchPad }) {
 
 function Map({ location }) {
 	return (
-		<AspectRatioBox ratio={16 / 5}>
+		<AspectRatio ratio={16 / 5}>
 			<Box
 				as="iframe"
 				src={`https://maps.google.com/maps?q=${location.latitude}, ${location.longitude}&z=15&output=embed`}
 				alt="demo"
 			/>
-		</AspectRatioBox>
+		</AspectRatio>
 	);
 }
 
