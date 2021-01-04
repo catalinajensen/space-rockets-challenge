@@ -1,5 +1,6 @@
 import React from 'react';
-import { Badge, Box, SimpleGrid, Text, IconButton } from '@chakra-ui/core';
+import { StarIcon } from '@chakra-ui/icons';
+import { Badge, Box, SimpleGrid, Text, IconButton } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
 import Error from './error';
@@ -65,11 +66,11 @@ export function LaunchPadItem({ launchPad, favouriteLaunchPads, markAsFavouriteL
 			<Box p="6">
 				<Box d="flex" alignItems="baseline">
 					{launchPad.status === 'active' ? (
-						<Badge px="2" variant="solid" variantColor="green">
+						<Badge px="2" variant="solid" colorScheme="green">
 							Active
 						</Badge>
 					) : (
-						<Badge px="2" variant="solid" variantColor="red">
+						<Badge px="2" variant="solid" colorScheme="red">
 							Retired
 						</Badge>
 					)}
@@ -93,10 +94,9 @@ export function LaunchPadItem({ launchPad, favouriteLaunchPads, markAsFavouriteL
 					<Box width="10%">
 						<IconButton
 							aria-label="Mark as favourite"
-							icon="star"
-							size="lg"
+							icon={<StarIcon />}
 							variant="ghost"
-							variantColor={isFavourite ? 'yellow' : 'gray'}
+							colorScheme={isFavourite ? 'yellow' : 'gray'}
 							onClick={e => markAsFavouriteLaunchPad(launchPad, e)}
 						/>
 					</Box>

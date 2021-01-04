@@ -1,4 +1,5 @@
 import React from 'react';
+import { StarIcon } from '@chakra-ui/icons';
 import {
 	Button,
 	Drawer,
@@ -11,7 +12,7 @@ import {
 	StatLabel,
 	StatHelpText,
 	useDisclosure
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import { LaunchPadItem } from './launch-pads';
 import { LaunchItem } from './launches';
 
@@ -21,7 +22,7 @@ export default function FavouritesDrawer({ favouriteItems, markAsFavourite }) {
 
 	return (
 		<>
-			<Button ref={btnRef} leftIcon="star" variantColor="yellow" onClick={onOpen}>
+			<Button ref={btnRef} leftIcon={<StarIcon mb="1" />} colorScheme="yellow" onClick={onOpen}>
 				See favourites
 			</Button>
 			<Drawer
